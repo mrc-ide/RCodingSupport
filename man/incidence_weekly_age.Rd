@@ -3,10 +3,9 @@
 \docType{data}
 \name{incidence_weekly_age}
 \alias{incidence_weekly_age}
-\title{Weekly cases by age group (matrix)}
+\title{Weekly case counts by age group (matrix)}
 \format{
 An integer matrix with 20 rows (age groups) and 260 columns (weeks).
-Row names are age bands; column names are week labels.
 }
 \source{
 Simulated for the Rcoding package (teaching example).
@@ -15,13 +14,11 @@ Simulated for the Rcoding package (teaching example).
 incidence_weekly_age
 }
 \description{
-Synthetic weekly case counts by 5-year age bands over five years.
-Rows represent age groups \code{"0-4"}, \code{"5-9"}, …, \code{"95-99"}.
-Columns represent weeks \code{"Week_001"} … \code{"Week_260"}.
+Weekly malaria case counts by 5-year age band over five years. Derived from
+\code{case_linelist}.
 }
 \examples{
 dim(incidence_weekly_age)
-rownames(incidence_weekly_age)[1:5]
-colSums(incidence_weekly_age)[1:6]  # weekly totals
+colSums(incidence_weekly_age)[1:6]
 }
 \keyword{datasets}

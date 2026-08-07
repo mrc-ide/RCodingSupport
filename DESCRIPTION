@@ -1,7 +1,7 @@
 Package: Rcoding
 Type: Package
 Title: Example Datasets and Exercises for R Coding Support
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
     person(
       "Bob", "Verity",
@@ -9,16 +9,17 @@ Authors@R: c(
       role = c("aut", "cre")
     )
   )
-Description: This package provides synthetic datasets and supporting materials 
-    for the R Coding Support module in the School of Public Health, Imperial 
-    College London. The package is designed to accompany weekly problem sets, 
-    giving students direct access to example objects for practising R coding 
-    skills. Data include simulated epidemiological time series, patient line 
-    lists, and example analysis outputs, all tailored for use in teaching.
+Description: This package provides synthetic datasets and supporting materials
+    for the R Coding Support module in the School of Public Health, Imperial
+    College London. All datasets describe a single simulated scenario -- endemic
+    malaria in the fictional Republic of Amani -- so that students meet the same
+    people, places and pathogen across the weekly problem sets. Objects range from
+    a case line-list and weekly surveillance series to genetic, spatial and
+    analysis-output examples. The export_examples() helper writes file copies of
+    these datasets for data-import practice.
 License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
 Depends: R (>= 4.0.0)
 Suggests: knitr, rmarkdown
-VignetteBuilder: knitr

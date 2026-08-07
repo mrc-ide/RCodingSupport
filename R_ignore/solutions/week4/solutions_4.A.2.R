@@ -20,7 +20,7 @@ library(here)
 # -------------------------------
 
 # load data on posterior draws
-df_draws <- readRDS(here("posterior_density.rds"))
+df_draws <- readRDS(here("R_ignore", "non_package_data", "posterior_density.rds"))
 
 # make an image plot
 image(
@@ -59,3 +59,6 @@ ggplot(grid_df, aes(x = mu, y = sigma)) +
   scale_x_continuous(limits = c(-5, 5), expand = c(0, 0)) +
   scale_y_continuous(limits = c(-5, 5), expand = c(0, 0)) +
   theme_minimal()
+
+# explore appearance to people with colour blindness
+colorBlindness::cvdPlot()

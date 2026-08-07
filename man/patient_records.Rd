@@ -3,18 +3,10 @@
 \docType{data}
 \name{patient_records}
 \alias{patient_records}
-\title{Patient records}
+\title{Patient records (cross-sectional demographic sample)}
 \format{
-A data frame with 150 rows (patients) and 7 variables:
-\describe{
-  \item{ids}{Patient ID, character string (e.g. \code{"ID0001"}).}
-  \item{age}{Age in years, integer.}
-  \item{sex}{Sex, factor with levels \code{"Male"} and \code{"Female"}.}
-  \item{ht_cm}{Height in centimetres, integer.}
-  \item{wt_kg}{Weight in kilograms, integer.}
-  \item{ethnicity}{Self-reported ethnicity, character string.}
-  \item{smoker}{Logical, \code{TRUE} if the patient is a current smoker.}
-}
+A data frame with 150 rows and 7 variables: \code{ids}, \code{age},
+\code{sex}, \code{ht_cm}, \code{wt_kg}, \code{ethnicity}, \code{bednet}.
 }
 \source{
 Simulated for the Rcoding package (teaching example).
@@ -23,14 +15,11 @@ Simulated for the Rcoding package (teaching example).
 patient_records
 }
 \description{
-A synthetic patient-level dataset containing demographic, anthropometric, and
-lifestyle information for 150 individuals. This dataset is designed for
-practising data.frame manipulation, plotting, and simple epidemiological
-calculations. Column names are deliberately messy.
+A 150-patient demographic sample drawn from \code{case_linelist}, with
+deliberately messy column names, for practising data-frame manipulation.
 }
 \examples{
 head(patient_records)
 table(patient_records$sex)
-mean(patient_records$wt_kg / (patient_records$ht_cm / 100)^2)  # mean BMI
 }
 \keyword{datasets}

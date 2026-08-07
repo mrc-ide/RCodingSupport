@@ -26,14 +26,14 @@ dat <- readRDS(here("R_ignore", "non_package_data", "two_cities_cases.rds"))
 str(dat)
 head(dat)
 
-# Create positivity = cases / tested
-dat$positivity <- dat$cases / dat$tested
+# Create prevalence = cases / tested
+dat$prevalence <- dat$cases / dat$tested
 
 # Quick range check (should be within [0, 1])
-range(dat$positivity)
+range(dat$prevalence)
 
 # ---- Task 2: First ggplot (lines + points, colour by city) ----
-p <- ggplot(dat, aes(x = date, y = positivity)) +
+p <- ggplot(dat, aes(x = date, y = prevalence)) +
   geom_line(aes(colour = city)) +
   geom_point(aes(colour = city), size = 1.4)
 
@@ -43,7 +43,7 @@ p
 # ---- Task 3: Improve presentation (labels, limits, theme) ----
 p_final <- p +
   xlab("Date") +
-  ylab("Test positivity (cases / tested)") +
+  ylab("Prevalence") +
   ggtitle("Test positivity over time by city") +
   ylim(0, 0.25) +
   theme_bw()
@@ -52,7 +52,7 @@ p_final
 
 # ---- Task 4: Save as image AND as an R object ----
 
-Check class of the saved object in-memory
+# Check class of the saved object in-memory
 class(p_final)
 
 # Save high-resolution PNG

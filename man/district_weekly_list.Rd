@@ -3,17 +3,10 @@
 \docType{data}
 \name{district_weekly_list}
 \alias{district_weekly_list}
-\title{Weekly prevalence data for two districts}
+\title{Weekly surveillance data for two districts (list)}
 \format{
-A list with two elements, \code{A} and \code{B}, each a data frame with:
-\describe{
-  \item{year}{Calendar year (integer).}
-  \item{week}{ISO week number (1–52, integer).}
-  \item{tested_X}{Number of individuals tested (integer), where \code{X} is
-  \code{"A"} or \code{"B"} depending on the district.}
-  \item{cases_X}{Number of positive cases (integer), where \code{X} is
-  \code{"A"} or \code{"B"} depending on the district.}
-}
+A list of two data frames, \code{A} (Lusenga) and \code{B} (Mbarako),
+each with \code{year}, \code{week}, and district-suffixed \code{tested_} / \code{cases_} columns.
 }
 \source{
 Simulated for the Rcoding package (teaching example).
@@ -22,15 +15,11 @@ Simulated for the Rcoding package (teaching example).
 district_weekly_list
 }
 \description{
-A synthetic dataset of weekly outbreak surveillance data from two districts.
-Each district has its own sample size, baseline prevalence, and coverage
-period, but both share an underlying seasonal pattern. Dates are represented
-only by year and ISO week (no calendar dates).
+Weekly tests and confirmed cases for the two focus cities, with district-specific
+column names so that merges use \code{year} and \code{week} as keys.
 }
 \examples{
 names(district_weekly_list)
 head(district_weekly_list$A)
-head(district_weekly_list$B)
-mean(district_weekly_list$A$cases_A / district_weekly_list$A$tested_A, na.rm = TRUE)
 }
 \keyword{datasets}

@@ -3,40 +3,24 @@
 \docType{data}
 \name{allele_freq_matrix}
 \alias{allele_freq_matrix}
-\title{Allele frequency matrix (loci × samples)}
+\title{Allele frequency matrix (loci x samples)}
 \format{
 A numeric matrix with 300 rows (loci) and 200 columns (samples).
-Row names are locus IDs; column names are sample IDs.
 }
 \source{
-Simulated for the \emph{Rcoding} package (teaching example).
+Simulated for the Rcoding package (teaching example).
 }
 \usage{
 allele_freq_matrix
 }
 \description{
-A synthetic dataset of allele frequency estimates across multiple loci and
-samples. Values are simulated from per-locus base frequencies with added
-sample-level noise, then perturbed by artefacts and structured missingness to
-mimic realistic genetic data challenges.
-}
-\details{
-Rows correspond to loci (\code{"locus_0001"}, \code{"locus_0002"}, …);
-columns correspond to samples (\code{"sample_001"}, \code{"sample_002"}, …).
-
-Features include:
-\itemize{
-  \item True allele frequencies in the range (0,1), with variation across loci and samples.
-  \item Occasional negative values (< 0) introduced to represent artefacts from
-        lab-based normalisation/calibration errors.
-  \item Structured missingness: some loci fail across many samples, and some
-        samples fail across many loci, in addition to random background NAs.
-}
+Synthetic malaria parasite SNP allele-frequency estimates across loci and
+samples, including lab artefacts (negative values) and structured missingness,
+for cleaning practice.
 }
 \examples{
 dim(allele_freq_matrix)
-allele_freq_matrix[1:5, 1:5]
-sum(is.na(allele_freq_matrix))       # total missing values
-sum(allele_freq_matrix < 0, na.rm=TRUE)  # count of artefacts
+sum(is.na(allele_freq_matrix))
+sum(allele_freq_matrix < 0, na.rm = TRUE)
 }
 \keyword{datasets}

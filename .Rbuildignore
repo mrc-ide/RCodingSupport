@@ -3,3 +3,7 @@
 R_ignore/
 ignore/
 LICENSE.md
+^data-raw$
+^data-raw/
+staged_data
+^\.DS_Store$

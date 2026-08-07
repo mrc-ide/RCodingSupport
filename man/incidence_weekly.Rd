@@ -5,7 +5,7 @@
 \alias{incidence_weekly}
 \title{Weekly total case counts (vector)}
 \format{
-An integer vector of length 260 (one value per week).
+An integer vector of length 260.
 }
 \source{
 Simulated for the Rcoding package (teaching example).
@@ -14,12 +14,10 @@ Simulated for the Rcoding package (teaching example).
 incidence_weekly
 }
 \description{
-Synthetic weekly total case counts across all age groups for five years
-(260 weeks). Values correspond to the column sums of
-\code{incidence_weekly_age}.
+National weekly total malaria case counts over five years; equals the column
+sums of \code{incidence_weekly_age}.
 }
 \examples{
-length(incidence_weekly)
-all.equal(incidence_weekly, colSums(incidence_weekly_age))
+plot(incidence_weekly, type = "l")
 }
 \keyword{datasets}

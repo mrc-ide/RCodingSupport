@@ -1,30 +1,57 @@
 
 # Rcoding
 
-**Rcoding** is a teaching package developed for the R Coding Support Sessions as part of the MSc in Epidemiology. Its purpose is to provide synthetic datasets that students can use to practice coding skills in R, from basic manipulation to more advanced workflows.
+**Rcoding** is a teaching package for the R Coding Support Sessions (MSc in
+Epidemiology). It provides synthetic datasets students use to practise R, from
+basic manipulation to more advanced workflows.
 
-All datasets are **fictional** and generated purely for teaching purposes.  
+Every dataset describes **one fictional scenario**: endemic, seasonal **malaria in
+the fictional Republic of Amani**, under surveillance across 12 districts over
+five years. Students meet the same people, places and pathogen across the weekly
+problem sets. All data are **fictional and simulated** purely for teaching; all
+place names are invented.
 
 ---
 
 ## Installation
 
-You can install the package directly from GitHub:
-
 ```r
 # install.packages("remotes")
-remotes::install_github("mrc-ide/Rcoding@")
+remotes::install_github("mrc-ide/Rcoding")
 ```
 
-## Available Data Objects
+## The single scenario
 
-- **incidence_weekly_age**: weekly case counts by 5-year age bands over five years (matrix).
-- **incidence_weekly**: total weekly case counts across all age groups (vector).
-- **patient_records**: synthetic patient line-list with demographics, anthropometrics, and smoking status (data frame).
+Almost every object is derived from two **master** datasets:
 
-- **incidence_weekly_age** — Weekly case counts by 5-year age bands over five years (matrix).
-- **incidence_weekly** — Total weekly case counts across all age groups (vector).
-- **patient_records** — Synthetic patient-level dataset with demographic, anthropometric, and lifestyle information for 150 individuals (data frame).
-- **smoking_analysis_list** — Bundled list containing synthetic data on smoking prevalence and lung cancer incidence, summary statistics, and a fitted linear model (list).
-- **district_weekly_list** — Weekly outbreak surveillance data from two districts, each with distinct sample sizes and coverage periods, sharing a seasonal pattern (list of data frames).
-- **allele_freq_matrix** — Synthetic allele-frequency dataset with 300 loci and 200 samples, including artefacts and structured missingness to mimic real genetic data (numeric matrix).
+- **case_linelist** — individual-level line-list of reported malaria cases (the master).
+- **environment_weekly** — weekly rainfall and temperature per district (drives transmission).
+
+Supporting masters: **testing_weekly**, **districts**, **facilities**.
+
+## Available data objects
+
+- **case_linelist** — malaria case line-list (~120k cases, 18 variables).
+- **environment_weekly** — weekly rainfall + temperature per district.
+- **testing_weekly** — weekly tests and confirmed cases per district.
+- **districts** / **facilities** — geography, population, bednet coverage, health facilities.
+- **incidence_weekly_age** — weekly case counts by 5-year age band (matrix).
+- **incidence_weekly** — total weekly case counts (vector).
+- **patient_records** — 150-patient demographic sample with messy names (data frame).
+- **district_weekly_list** — weekly surveillance for the two focus cities (list).
+- **allele_freq_matrix** — parasite SNP allele frequencies, with artefacts and missingness (matrix).
+- **resistance_trajectories** — drug-resistance marker prevalence + modelled bands (list).
+- **analysis_bundle** — bednet coverage vs malaria incidence: data, summary stats, fitted `lm` (list).
+- **posterior_density** — 2D posterior over transmission-model parameters (list).
+- **chw_trial** — community health worker intervention trial summary (data frame).
+
+## Data-import practice
+
+`export_examples()` writes file copies of these datasets (in various formats, with
+deliberate "messiness") so students can practise reading data from disk — the file
+they import is the same data they can also load directly from the package:
+
+```r
+dir.create("data_raw")
+Rcoding::export_examples("data_raw")
+```
