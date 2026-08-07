@@ -4,7 +4,7 @@
 # Date: 2025-10-08
 #
 # Inputs:
-#   - district_weekly_list (from the Rcoding package)
+#   - district_weekly_list (from the RCodingSupport package)
 #
 # Outputs:
 #   - R_ignore/non_package_data/two_cities_cases.rds

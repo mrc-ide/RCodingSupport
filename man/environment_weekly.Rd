@@ -10,7 +10,7 @@ including \code{district}, \code{year}, \code{week}, \code{week_start} (\code{Da
 \code{rainfall_mm} and \code{temp_c}.
 }
 \source{
-Simulated for the Rcoding package (teaching example).
+Simulated for the RCodingSupport package (teaching example).
 }
 \usage{
 environment_weekly

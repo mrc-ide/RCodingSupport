@@ -9,7 +9,7 @@ A data frame with 4 rows and 4 variables: \code{condition}, \code{group},
 \code{mean_days_to_treatment}, \code{ci_lower}, \code{ci_upper}.
 }
 \source{
-Simulated for the Rcoding package (teaching example).
+Simulated for the RCodingSupport package (teaching example).
 }
 \usage{
 chw_trial

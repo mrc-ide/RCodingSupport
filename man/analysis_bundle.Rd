@@ -14,7 +14,7 @@ A list with three elements:
 }
 }
 \source{
-Simulated for the Rcoding package (teaching example).
+Simulated for the RCodingSupport package (teaching example).
 }
 \usage{
 analysis_bundle

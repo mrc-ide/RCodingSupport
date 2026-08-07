@@ -2,7 +2,7 @@
 #
 # Integration step: build the package's lazy-loaded data objects (data/*.rda) from
 # the masters produced by 01_simulate_universe.R. These are the objects exposed via
-# library(Rcoding) and used directly by the early (pre-import) weeks.
+# library(RCodingSupport) and used directly by the early (pre-import) weeks.
 #
 # SAFETY: by default this writes .rda files to STAGE_DIR, NOT the live package
 # data/ folder, so it can be reviewed before it replaces anything. To actually

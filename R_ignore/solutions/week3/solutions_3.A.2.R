@@ -6,8 +6,8 @@
 # ------------------------------------------------------------
 
 ## 1) Load the teaching package -----------------------------------------------
-# remotes::install_github("mrc-ide/Rcoding@v1.0.0")
-library(Rcoding)   # provides 'incidence_weekly' vector
+# remotes::install_github("mrc-ide/RCodingSupport@v1.0.0")
+library(RCodingSupport)   # provides 'incidence_weekly' vector
 
 ## 2) Source the helper script ------------------------------------------------
 # The file should live at: source_scripts/moving_average.R

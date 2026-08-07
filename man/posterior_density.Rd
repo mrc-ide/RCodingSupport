@@ -9,7 +9,7 @@ A list with \code{R0} (x grid), \code{reporting_rate} (y grid) and
 \code{density} (a matrix of densities).
 }
 \source{
-Simulated for the Rcoding package (teaching example).
+Simulated for the RCodingSupport package (teaching example).
 }
 \usage{
 posterior_density

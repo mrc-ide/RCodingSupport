@@ -9,7 +9,7 @@ A data frame with 12 rows and 7 variables, including \code{district},
 \code{region}, \code{is_city}, \code{population}, \code{bednet_coverage}.
 }
 \source{
-Simulated for the Rcoding package (teaching example).
+Simulated for the RCodingSupport package (teaching example).
 }
 \usage{
 districts

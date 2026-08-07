@@ -6,7 +6,7 @@
 #' deliberate "messiness" that the Week 3+ import and cleaning problem sets expect.
 #'
 #' The point is that the file a student imports is provably the same data they
-#' already met via \code{library(Rcoding)}: the package is the single source of
+#' already met via \code{library(RCodingSupport)}: the package is the single source of
 #' truth, and file import is just one way to reach it.
 #'
 #' @param dir Directory to write files into (created if needed).
@@ -19,7 +19,7 @@
 #' @examples
 #' \dontrun{
 #' dir.create("data_raw")
-#' Rcoding::export_examples("data_raw")
+#' RCodingSupport::export_examples("data_raw")
 #' }
 export_examples <- function(dir, which = "all", seed = 2026) {
   stopifnot(is.character(dir), length(dir) == 1)

@@ -8,7 +8,7 @@
 A numeric matrix with 300 rows (loci) and 200 columns (samples).
 }
 \source{
-Simulated for the Rcoding package (teaching example).
+Simulated for the RCodingSupport package (teaching example).
 }
 \usage{
 allele_freq_matrix

@@ -1,7 +1,7 @@
 
-# Rcoding
+# RCodingSupport
 
-**Rcoding** is a teaching package for the R Coding Support Sessions (MSc in
+**RCodingSupport** is a teaching package for the R Coding Support Sessions (MSc in
 Epidemiology). It provides synthetic datasets students use to practise R, from
 basic manipulation to more advanced workflows.
 
@@ -17,8 +17,12 @@ place names are invented.
 
 ```r
 # install.packages("remotes")
-remotes::install_github("mrc-ide/Rcoding")
+remotes::install_github("mrc-ide/RCodingSupport")
+library(RCodingSupport)
 ```
+
+Teaching materials pin a tagged version per year, e.g.
+`remotes::install_github("mrc-ide/RCodingSupport@teaching-2026")`.
 
 ## The single scenario
 
@@ -53,5 +57,5 @@ they import is the same data they can also load directly from the package:
 
 ```r
 dir.create("data_raw")
-Rcoding::export_examples("data_raw")
+RCodingSupport::export_examples("data_raw")
 ```

@@ -9,7 +9,7 @@ A data frame with 150 rows and 7 variables: \code{ids}, \code{age},
 \code{sex}, \code{ht_cm}, \code{wt_kg}, \code{ethnicity}, \code{bednet}.
 }
 \source{
-Simulated for the Rcoding package (teaching example).
+Simulated for the RCodingSupport package (teaching example).
 }
 \usage{
 patient_records

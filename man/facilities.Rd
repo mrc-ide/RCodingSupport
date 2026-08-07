@@ -8,7 +8,7 @@
 A data frame with 35 rows and 2 variables: \code{district}, \code{facility_id}.
 }
 \source{
-Simulated for the Rcoding package (teaching example).
+Simulated for the RCodingSupport package (teaching example).
 }
 \usage{
 facilities

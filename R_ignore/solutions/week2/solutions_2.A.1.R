@@ -3,8 +3,8 @@
 ## 2.A.1 Working with Vectors and Matrices
 ## ------------------------------------------------------------
 
-# remotes::install_github("mrc-ide/Rcoding@v1.0.0")
-library(Rcoding)
+# remotes::install_github("mrc-ide/RCodingSupport@v1.0.0")
+library(RCodingSupport)
 
 ## ------------------------------------------------------------
 ## Part 1: Working with vectors

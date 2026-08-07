@@ -14,7 +14,7 @@ A list of two data frames:
 }
 }
 \source{
-Simulated for the Rcoding package (teaching example).
+Simulated for the RCodingSupport package (teaching example).
 }
 \usage{
 resistance_trajectories

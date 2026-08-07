@@ -3,15 +3,15 @@
 ## 2.A.2 Working with Data Frames
 ## ------------------------------------------------------------
 
-# remotes::install_github("mrc-ide/Rcoding@v1.0.0")
-library(Rcoding)
+# remotes::install_github("mrc-ide/RCodingSupport@v1.0.0")
+library(RCodingSupport)
 
 ## ------------------------------------------------------------
 ## Task 1: Inspect the data
 ## ------------------------------------------------------------
 
 # The dataset
-patient_records <- Rcoding::patient_records
+patient_records <- RCodingSupport::patient_records
 
 # Quick looks
 head(patient_records)

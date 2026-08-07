@@ -24,12 +24,12 @@ deliberate "messiness" that the Week 3+ import and cleaning problem sets expect.
 }
 \details{
 The point is that the file a student imports is provably the same data they
-already met via \code{library(Rcoding)}: the package is the single source of
+already met via \code{library(RCodingSupport)}: the package is the single source of
 truth, and file import is just one way to reach it.
 }
 \examples{
 \dontrun{
 dir.create("data_raw")
-Rcoding::export_examples("data_raw")
+RCodingSupport::export_examples("data_raw")
 }
 }

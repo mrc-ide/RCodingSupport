@@ -1,4 +1,4 @@
-# Documentation for the Rcoding teaching datasets.
+# Documentation for the RCodingSupport teaching datasets.
 #
 # All datasets describe ONE fictional scenario: endemic seasonal malaria in the
 # fictional Republic of Amani (a sub-Saharan setting; all place names invented),
@@ -33,7 +33,7 @@
 #'   \item{outcome}{Factor, \code{"recovered"}/\code{"died"}.}
 #'   \item{death_date}{Date of death (\code{NA} unless died).}
 #' }
-#' @source Simulated for the Rcoding package (teaching example).
+#' @source Simulated for the RCodingSupport package (teaching example).
 #' @examples
 #' head(case_linelist)
 #' table(case_linelist$outcome)
@@ -49,7 +49,7 @@
 #' @format A data frame with 3,120 rows (12 districts x 260 weeks) and 9 variables,
 #' including \code{district}, \code{year}, \code{week}, \code{week_start} (\code{Date}),
 #' \code{rainfall_mm} and \code{temp_c}.
-#' @source Simulated for the Rcoding package (teaching example).
+#' @source Simulated for the RCodingSupport package (teaching example).
 #' @examples
 #' head(environment_weekly)
 "environment_weekly"
@@ -62,7 +62,7 @@
 #'
 #' @format A data frame with 3,120 rows and 6 variables: \code{district},
 #' \code{year}, \code{week}, \code{week_start}, \code{tested}, \code{cases}.
-#' @source Simulated for the Rcoding package (teaching example).
+#' @source Simulated for the RCodingSupport package (teaching example).
 #' @examples
 #' head(testing_weekly)
 "testing_weekly"
@@ -75,7 +75,7 @@
 #'
 #' @format A data frame with 12 rows and 7 variables, including \code{district},
 #' \code{region}, \code{is_city}, \code{population}, \code{bednet_coverage}.
-#' @source Simulated for the Rcoding package (teaching example).
+#' @source Simulated for the RCodingSupport package (teaching example).
 #' @examples
 #' districts
 "districts"
@@ -87,7 +87,7 @@
 #' \code{case_linelist}.
 #'
 #' @format A data frame with 35 rows and 2 variables: \code{district}, \code{facility_id}.
-#' @source Simulated for the Rcoding package (teaching example).
+#' @source Simulated for the RCodingSupport package (teaching example).
 #' @examples
 #' head(facilities)
 "facilities"
@@ -99,7 +99,7 @@
 #' \code{case_linelist}.
 #'
 #' @format An integer matrix with 20 rows (age groups) and 260 columns (weeks).
-#' @source Simulated for the Rcoding package (teaching example).
+#' @source Simulated for the RCodingSupport package (teaching example).
 #' @examples
 #' dim(incidence_weekly_age)
 #' colSums(incidence_weekly_age)[1:6]
@@ -112,7 +112,7 @@
 #' sums of \code{incidence_weekly_age}.
 #'
 #' @format An integer vector of length 260.
-#' @source Simulated for the Rcoding package (teaching example).
+#' @source Simulated for the RCodingSupport package (teaching example).
 #' @examples
 #' plot(incidence_weekly, type = "l")
 "incidence_weekly"
@@ -125,7 +125,7 @@
 #'
 #' @format A data frame with 150 rows and 7 variables: \code{ids}, \code{age},
 #' \code{sex}, \code{ht_cm}, \code{wt_kg}, \code{ethnicity}, \code{bednet}.
-#' @source Simulated for the Rcoding package (teaching example).
+#' @source Simulated for the RCodingSupport package (teaching example).
 #' @examples
 #' head(patient_records)
 #' table(patient_records$sex)
@@ -139,7 +139,7 @@
 #'
 #' @format A list of two data frames, \code{A} (Lusenga) and \code{B} (Mbarako),
 #' each with \code{year}, \code{week}, and district-suffixed \code{tested_} / \code{cases_} columns.
-#' @source Simulated for the Rcoding package (teaching example).
+#' @source Simulated for the RCodingSupport package (teaching example).
 #' @examples
 #' names(district_weekly_list)
 #' head(district_weekly_list$A)
@@ -153,7 +153,7 @@
 #' for cleaning practice.
 #'
 #' @format A numeric matrix with 300 rows (loci) and 200 columns (samples).
-#' @source Simulated for the Rcoding package (teaching example).
+#' @source Simulated for the RCodingSupport package (teaching example).
 #' @examples
 #' dim(allele_freq_matrix)
 #' sum(is.na(allele_freq_matrix))
@@ -173,7 +173,7 @@
 #'   \item{model}{Modelled credible band on a weekly grid: \code{marker}, \code{site},
 #'     \code{t}, \code{Q2.5}, \code{Q25}, \code{Q75}, \code{Q97.5}.}
 #' }
-#' @source Simulated for the Rcoding package (teaching example).
+#' @source Simulated for the RCodingSupport package (teaching example).
 #' @examples
 #' names(resistance_trajectories)
 #' head(resistance_trajectories$data)
@@ -192,7 +192,7 @@
 #'   \item{summary_stats}{Named numeric vector of means and SDs.}
 #'   \item{fit}{An \code{lm} object, \code{malaria_incidence ~ bednet_coverage}.}
 #' }
-#' @source Simulated for the Rcoding package (teaching example).
+#' @source Simulated for the RCodingSupport package (teaching example).
 #' @examples
 #' names(analysis_bundle)
 #' coef(analysis_bundle$fit)
@@ -206,7 +206,7 @@
 #'
 #' @format A list with \code{R0} (x grid), \code{reporting_rate} (y grid) and
 #' \code{density} (a matrix of densities).
-#' @source Simulated for the Rcoding package (teaching example).
+#' @source Simulated for the RCodingSupport package (teaching example).
 #' @examples
 #' image(posterior_density$R0, posterior_density$reporting_rate, posterior_density$density)
 "posterior_density"
@@ -219,7 +219,7 @@
 #'
 #' @format A data frame with 4 rows and 4 variables: \code{condition}, \code{group},
 #' \code{mean_days_to_treatment}, \code{ci_lower}, \code{ci_upper}.
-#' @source Simulated for the Rcoding package (teaching example).
+#' @source Simulated for the RCodingSupport package (teaching example).
 #' @examples
 #' chw_trial
 "chw_trial"

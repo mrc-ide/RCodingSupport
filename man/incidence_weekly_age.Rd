@@ -8,7 +8,7 @@
 An integer matrix with 20 rows (age groups) and 260 columns (weeks).
 }
 \source{
-Simulated for the Rcoding package (teaching example).
+Simulated for the RCodingSupport package (teaching example).
 }
 \usage{
 incidence_weekly_age

@@ -1,8 +1,8 @@
 ## 2.B.2 – Cleaning a Matrix of Allele Frequencies — Solutions
 ## ------------------------------------------------------------
 
-## remotes::install_github("mrc-ide/Rcoding@v1.0.0")
-library(Rcoding)
+## remotes::install_github("mrc-ide/RCodingSupport@v1.0.0")
+library(RCodingSupport)
 
 ## ------------------------------------------------------------
 ## Task 1: Explore the dataset

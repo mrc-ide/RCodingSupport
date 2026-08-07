@@ -8,7 +8,7 @@
 An integer vector of length 260.
 }
 \source{
-Simulated for the Rcoding package (teaching example).
+Simulated for the RCodingSupport package (teaching example).
 }
 \usage{
 incidence_weekly

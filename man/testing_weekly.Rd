@@ -9,7 +9,7 @@ A data frame with 3,120 rows and 6 variables: \code{district},
 \code{year}, \code{week}, \code{week_start}, \code{tested}, \code{cases}.
 }
 \source{
-Simulated for the Rcoding package (teaching example).
+Simulated for the RCodingSupport package (teaching example).
 }
 \usage{
 testing_weekly

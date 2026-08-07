@@ -9,7 +9,7 @@ A list of two data frames, \code{A} (Lusenga) and \code{B} (Mbarako),
 each with \code{year}, \code{week}, and district-suffixed \code{tested_} / \code{cases_} columns.
 }
 \source{
-Simulated for the Rcoding package (teaching example).
+Simulated for the RCodingSupport package (teaching example).
 }
 \usage{
 district_weekly_list

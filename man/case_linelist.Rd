@@ -26,7 +26,7 @@ A data frame with 119,757 rows (one per reported case) and 20 variables:
 }
 }
 \source{
-Simulated for the Rcoding package (teaching example).
+Simulated for the RCodingSupport package (teaching example).
 }
 \usage{
 case_linelist

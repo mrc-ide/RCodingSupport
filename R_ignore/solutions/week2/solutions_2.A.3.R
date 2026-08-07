@@ -3,8 +3,8 @@
 ## 2.A.3 Working with Lists
 ## ------------------------------------------------------------
 
-# remotes::install_github("mrc-ide/Rcoding@v1.0.0")
-library(Rcoding)
+# remotes::install_github("mrc-ide/RCodingSupport@v1.0.0")
+library(RCodingSupport)
 
 ## Object supplied by the package:
 smoking_analysis_list
