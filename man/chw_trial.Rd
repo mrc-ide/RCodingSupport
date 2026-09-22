@@ -5,7 +5,7 @@
 \alias{chw_trial}
 \title{Community health worker trial summary}
 \format{
-A data frame with 4 rows and 4 variables: \code{condition}, \code{group},
+A data frame with 4 rows and 5 variables: \code{condition}, \code{group},
 \code{mean_days_to_treatment}, \code{ci_lower}, \code{ci_upper}.
 }
 \source{

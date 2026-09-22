@@ -5,7 +5,7 @@
 \alias{case_linelist}
 \title{Malaria case line-list (master dataset)}
 \format{
-A data frame with 119,757 rows (one per reported case) and 20 variables:
+A data frame with 114,110 rows (one per reported case) and 20 variables:
 \describe{
   \item{case_id}{Case identifier, e.g. \code{"M000001"}.}
   \item{onset_date, report_date}{Symptom onset and reporting dates (\code{Date}).}
@@ -34,8 +34,9 @@ case_linelist
 \description{
 Individual-level line-list of reported malaria cases in the fictional Republic
 of Amani over five years. This is the master object from which most other
-datasets in the package are derived. Transmission is seasonal and rainfall-driven;
-disease burden and severe outcomes fall most heavily on young children.
+datasets in the package are derived. Transmission is driven by rainfall with an
+approximately six-week lag; disease burden and severe outcomes fall most heavily
+on young children.
 }
 \examples{
 head(case_linelist)

@@ -7,7 +7,7 @@
 #   environment_weekly  weekly rainfall + temperature per district (the driver)
 #   testing_weekly      weekly tests + confirmed cases per district (denominator)
 #
-# Malaria specifics: rainfall drives transmission with a ~3-week lag; ITN (bednet)
+# Malaria specifics: rainfall drives transmission with a ~6-week lag; ITN (bednet)
 # coverage reduces transmission; cases peak in young children; severe disease, ICU
 # admission and death are concentrated in the young.
 #
@@ -25,13 +25,40 @@ message("Writing master objects to: ", stage_dir)
 
 .set_seed()
 
+# LAG. The delay from rainfall to a case appearing in surveillance is the sum of
+# four biological steps, at the 22-27 C temperatures of this scenario:
+#
+#   aquatic development (egg -> emerging adult)        8-12 days
+#   newly emerged female takes an infective bloodmeal   2-3 days
+#   sporogony (extrinsic incubation) in the mosquito   11-14 days
+#   human intrinsic incubation -> symptom onset         9-14 days
+#   --------------------------------------------------------------
+#   rainfall -> symptom onset                          30-43 days   (4.5-6 weeks)
+#
+# Six weeks sits mid-range, and matches the 1-3 month rainfall-malaria lags
+# typically reported for African settings. epi_week is assigned from onset
+# (delay-free), so this is exactly the lag a student can recover from the data.
+true_lag      <- 6L      # weeks
+rain_coef     <- 0.025   # log-linear rainfall effect; peak/trough ~ exp(rain_coef * 68)
+bednet_effect <- 0.6     # proportional reduction in transmission at full ITN coverage
+
 # ------------------------------------------------------------------------------
 # 1) Environmental series per district-week: rainfall (seasonal) + temperature
 # ------------------------------------------------------------------------------
-environment_weekly <- districts |>
+# Generated over a `true_lag`-week BURN-IN prefix as well, so that week 1 of the
+# study period already has real rainfall history behind it. Without the burn-in
+# the first six weeks would have no driver and would need filling with a guess,
+# which plants a visible step at the start of every series. The prefix is dropped
+# before environment_weekly is saved.
+ext_t          <- seq(1L - true_lag, n_weeks)
+ext_week_start <- start_date + (ext_t - 1L) * 7
+ext_year       <- 2020L + (ext_t - 1L) %/% weeks_per_year
+ext_week       <- (ext_t - 1L) %% weeks_per_year + 1L
+
+environment_ext <- districts |>
   select(district, rain_baseline, temp_baseline) |>
-  crossing(tibble(t = scenario_t, year = scenario_year,
-                  week = scenario_week, week_start = scenario_week_start)) |>
+  crossing(tibble(t = ext_t, year = ext_year,
+                  week = ext_week, week_start = ext_week_start)) |>
   arrange(district, t) |>
   mutate(
     rainfall_mm = pmax(0, rain_baseline +
@@ -40,6 +67,10 @@ environment_weekly <- districts |>
     temp_c = temp_baseline + 3.5 * sin(2 * pi * (t - 30) / weeks_per_year) +
       rnorm(n(), 0, 1.0)
   )
+
+# the saved master covers the study period only
+environment_weekly <- environment_ext |> filter(t >= 1L)
+stopifnot(nrow(environment_weekly) == n_dist * n_weeks)
 
 # ---- SANITY: environment ------------------------------------------------------
 peek("environment_weekly")
@@ -79,21 +110,31 @@ p_temp <- environment_weekly |>
 print(p_season + p_temp)
 
 # ------------------------------------------------------------------------------
-# 2) Expected weekly cases: lagged rainfall x seasonality x (1 - bednet effect)
+# 2) Expected weekly cases: lagged rainfall x (1 - bednet effect)
 # ------------------------------------------------------------------------------
-true_lag <- 3L
-bednet_effect <- 0.6   # proportional reduction in transmission at full ITN coverage
+# DRIVER. Rainfall is the ONLY seasonal driver. An earlier version multiplied in a
+# separate hard-coded seasonal term that was both stronger than the rainfall
+# effect and peaked 4 weeks earlier, so cases actually peaked BEFORE rainfall and
+# the lag was invisible in a plain cross-correlation. Removing it makes the
+# scenario match its own description: cases peak after rainfall, and the lag is
+# recoverable straight from the two series.
 
-env_model <- environment_weekly |>
+env_model <- environment_ext |>
   left_join(select(districts, district, population, base_rate, bednet_coverage),
             by = "district") |>
   group_by(district) |>
   arrange(t, .by_group = TRUE) |>
+  # lag on the extended frame, then drop the burn-in: every remaining week has a
+  # real observed rainfall value behind it
+  mutate(rain_lag = lag(rainfall_mm, n = true_lag)) |>
+  filter(t >= 1L) |>
   mutate(
-    rain_lag = lag(rainfall_mm, n = true_lag, default = 0),
-    seasonal = 1 + 0.6 * sin(2 * pi * (t - 6) / weeks_per_year),
-    lambda   = population * (base_rate / weeks_per_year) * seasonal *
-      exp(0.006 * (rain_lag - mean(rainfall_mm))) *
+    rain_effect = exp(rain_coef * (rain_lag - mean(rainfall_mm))),
+    # Normalise so seasonal forcing redistributes cases across the year without
+    # inflating the district total; base_rate keeps its meaning as the annual
+    # attack rate.
+    rain_effect = rain_effect / mean(rain_effect),
+    lambda   = population * (base_rate / weeks_per_year) * rain_effect *
       (1 - bednet_effect * bednet_coverage),
     cases_expected = pmax(lambda, 0.1),
     cases          = rpois(n(), cases_expected)
@@ -129,11 +170,12 @@ p_rain <- ggplot(nat, aes(week_start, rain)) +
   geom_line(colour = "steelblue", linewidth = 0.5) +
   labs(x = NULL, y = "Mean rainfall (mm)", title = "National mean rainfall")
 
-# Cross-correlation of rainfall against cases. On the RAW series the shared annual
-# cycle dominates and hides the lag: cases carry their own `seasonal` term (peaking
-# ~4 weeks before rainfall does), so the raw peak sits at a small POSITIVE lag.
-# Removing the week-of-year mean from both series strips that common cycle out, and
-# what remains is the rainfall noise driving cases -- which recovers true_lag.
+# Cross-correlation of rainfall against cases. Rainfall is the only seasonal
+# driver, so the RAW series should peak at -true_lag on its own -- this is the
+# check that the scenario matches its own description. The deseasonalised panel
+# (week-of-year mean removed from both series) is the stricter test: it strips the
+# common annual cycle and asks whether the week-to-week rainfall ANOMALIES still
+# drive cases at the same lag.
 ccf_df <- function(x, y, label) {
   cc <- ccf(x, y, lag.max = 12, plot = FALSE)
   tibble(lag = as.numeric(cc$lag), acf = as.numeric(cc$acf), series = label)
@@ -161,7 +203,7 @@ p_ccf <- ggplot(cc_all, aes(lag, acf)) +
   scale_x_continuous(breaks = seq(-12, 12, 6)) +
   labs(x = "Lag (weeks)", y = "Cross-correlation",
        title = "Rainfall leads cases",
-       subtitle = sprintf("red = the planted lag of -%d; seasonality hides it in the raw series", true_lag))
+       subtitle = sprintf("red = the planted lag of -%d weeks (%d days)", true_lag, true_lag * 7))
 
 p_itn <- ggplot(by_dist, aes(bednet, per_1000_yr, colour = region)) +
   geom_point(size = 2.5) +

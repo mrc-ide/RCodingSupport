@@ -10,7 +10,7 @@
 # >>> resemblance to real places is coincidental. The data are entirely simulated.
 #
 # Scenario: endemic, seasonal malaria in the fictional Republic of Amani, a
-# sub-Saharan setting. Transmission is rainfall-driven (with a lag); disease burden
+# sub-Saharan setting. Transmission is rainfall-driven (with a six-week lag); disease burden
 # and severe outcomes fall most heavily on young children (acquired immunity with
 # age); insecticide-treated bednet (ITN) coverage varies by district and reduces
 # transmission. Surveillance runs across 12 districts over 5 years (2020-2025).

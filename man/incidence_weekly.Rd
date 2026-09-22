@@ -5,7 +5,8 @@
 \alias{incidence_weekly}
 \title{Weekly total case counts (vector)}
 \format{
-An integer vector of length 260.
+A numeric vector of length 260 (the column sums of
+\code{incidence_weekly_age}).
 }
 \source{
 Simulated for the RCodingSupport package (teaching example).

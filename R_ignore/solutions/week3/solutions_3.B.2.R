@@ -8,6 +8,7 @@
 #       a list saved by the fitting script, with elements:
 #         data           the Kanyeru weekly series (from data_raw/rainfall_cases.csv)
 #                        plus the lagged-rainfall column used in the model
+#                        (rainfall lagged by 6 weeks -- the scenario's true lag)
 #         fitted_values  fitted mean cases, one per week
 #         pred_grid      data.frame(rain_lag, mu) for the effect curve
 #
@@ -39,7 +40,7 @@ png(
 
 plot(dat_model$t, dat_model$malaria_cases,
      type = "h", col = "grey40",
-     ylim = c(0, 40),
+     ylim = c(0, 60),
      xlab = "Week", ylab = "Malaria cases",
      main = "Kanyeru weekly malaria cases with fitted mean (Poisson GLM)")
 

@@ -17,7 +17,8 @@ environment_weekly
 }
 \description{
 Weekly rainfall and mean temperature for each district over five years. Rainfall
-drives malaria transmission with an approximately three-week lag.
+drives malaria transmission with an approximately six-week lag (the combined
+mosquito development, sporogony and human incubation delay).
 }
 \examples{
 head(environment_weekly)

@@ -32,8 +32,8 @@ Supporting masters: **testing_weekly**, **districts**, **facilities**.
 
 ## Available data objects
 
-- **case_linelist** — malaria case line-list (~120k cases, 18 variables).
-- **environment_weekly** — weekly rainfall + temperature per district.
+- **case_linelist** — malaria case line-list (~114k cases, 20 variables).
+- **environment_weekly** — weekly rainfall + temperature per district (rainfall drives transmission with a six-week lag).
 - **testing_weekly** — weekly tests and confirmed cases per district.
 - **districts** / **facilities** — geography, population, bednet coverage, health facilities.
 - **incidence_weekly_age** — weekly case counts by 5-year age band (matrix).

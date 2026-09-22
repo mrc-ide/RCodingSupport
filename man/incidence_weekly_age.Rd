@@ -6,6 +6,7 @@
 \title{Weekly case counts by age group (matrix)}
 \format{
 An integer matrix with 20 rows (age groups) and 260 columns (weeks).
+The oldest five bands are all-zero: no simulated case is over 71.
 }
 \source{
 Simulated for the RCodingSupport package (teaching example).

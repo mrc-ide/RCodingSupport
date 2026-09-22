@@ -5,7 +5,7 @@
 \alias{districts}
 \title{Districts of the Republic of Amani}
 \format{
-A data frame with 12 rows and 7 variables, including \code{district},
+A data frame with 12 rows and 8 variables, including \code{district},
 \code{region}, \code{is_city}, \code{population}, \code{bednet_coverage}.
 }
 \source{
