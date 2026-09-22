@@ -1,14 +1,11 @@
 
 # RCodingSupport
 
-**RCodingSupport** is a teaching package for the R Coding Support Sessions (MSc in
-Epidemiology). It provides synthetic datasets students use to practise R, from
-basic manipulation to more advanced workflows.
+**RCodingSupport** is a teaching package for the R Coding Support Sessions. It provides synthetic datasets students use to practise R, from basic manipulation to more advanced workflows.
 
 Every dataset describes **one fictional scenario**: endemic, seasonal **malaria in
 the fictional Republic of Amani**, under surveillance across 12 districts over
-five years. Students meet the same people, places and pathogen across the weekly
-problem sets. All data are **fictional and simulated** purely for teaching; all
+five years. All data are **fictional and simulated** purely for teaching; all
 place names are invented.
 
 ---
