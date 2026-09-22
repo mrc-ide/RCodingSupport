@@ -8,12 +8,10 @@
 #   resistance_trajectories  observed prevalence + modelled credible bands for two
 #                            drug-resistance markers across sentinel sites over time
 #                            (faceting / ribbon-plot lesson). Self-contained: no
-#                            external packages, simulated for the FICTIONAL sites
-#                            (replaces the old real-Uganda DR_frequency dataset).
+#                            external packages, simulated for the FICTIONAL sites.
 # ------------------------------------------------------------------------------
 
-source("00_setting.R")
-stage_dir <- Sys.getenv("STAGE_DIR", unset = file.path(getwd(), "staged_data"))
+source(here::here("data-raw", "00_setting.R"))
 dir.create(stage_dir, showWarnings = FALSE, recursive = TRUE)
 
 # ==============================================================================
@@ -46,6 +44,49 @@ saveRDS(allele_freq_matrix, file.path(stage_dir, "allele_freq_matrix.rds"))
 cat(sprintf("allele_freq_matrix: %d x %d | %.1f%% missing | %d artefacts (<0)\n",
             nrow(allele_freq_matrix), ncol(allele_freq_matrix),
             100*mean(is.na(allele_freq_matrix)), sum(allele_freq_matrix < 0, na.rm = TRUE)))
+
+# ---- SANITY: the matrix as the 2.B.2 cleaning exercise sees it --------------
+peek("allele_freq_matrix")
+print(round(allele_freq_matrix[1:6, 1:6], 3))
+row_na <- rowMeans(is.na(allele_freq_matrix)); col_na <- colMeans(is.na(allele_freq_matrix))
+cat(sprintf("loci with >30%% NA: %d (planted bad loci: %d) | samples with >30%% NA: %d (planted: %d)\n",
+            sum(row_na > 0.3), length(bad_loci), sum(col_na > 0.3), length(bad_samples)))
+keep <- row_na <= 0.3
+cat(sprintf("after dropping loci >30%% NA: %d loci kept; mean row frequency > 0.5 at %d loci\n",
+            sum(keep), sum(rowMeans(allele_freq_matrix[keep, ], na.rm = TRUE) > 0.5)))
+
+p_heat <- as.data.frame.table(allele_freq_matrix, responseName = "freq") |>
+  setNames(c("locus", "sample", "freq")) |>
+  mutate(locus = as.integer(sub("locus_", "", locus)),
+         sample = as.integer(sub("sample_", "", sample))) |>
+  ggplot(aes(sample, locus, fill = freq)) +
+  geom_raster() +
+  scale_fill_viridis_c(na.value = "white") +
+  labs(x = "Sample", y = "Locus", title = "Raw matrix",
+       subtitle = "white = NA; planted bad rows/cols show as stripes") +
+  theme(legend.position = "bottom", legend.key.height = unit(3, "mm"))
+
+p_vals <- data.frame(freq = as.vector(allele_freq_matrix)) |>
+  filter(!is.na(freq)) |>            # NA cells are shown in the missingness panels instead
+  ggplot(aes(freq)) +
+  geom_histogram(bins = 60, fill = "grey70") +
+  geom_vline(xintercept = 0, colour = "red") +
+  labs(x = "Allele frequency", y = "Cells", title = "Value distribution",
+       subtitle = sprintf("spike below 0 = artefacts; %d NA cells excluded",
+                          sum(is.na(allele_freq_matrix))))
+
+p_miss <- bind_rows(
+  tibble(prop_na = row_na, margin = "By locus"),
+  tibble(prop_na = col_na, margin = "By sample")
+) |>
+  ggplot(aes(prop_na)) +
+  geom_histogram(bins = 30, fill = "grey70") +
+  geom_vline(xintercept = 0.3, linetype = 2, colour = "red") +
+  facet_wrap(~ margin, scales = "free_y") +
+  labs(x = "Proportion NA", y = "Count", title = "Missingness is bimodal",
+       subtitle = "dashed line = the 30% filter students choose")
+
+print(p_heat + (p_vals / p_miss))
 
 # ==============================================================================
 # 2) resistance_trajectories  (2 markers x sentinel sites, over the study window)
@@ -102,10 +143,34 @@ for (i in seq_len(nrow(markers))) {
 fac_m <- function(x) factor(x, levels = markers$marker)
 fac_s <- function(x) factor(x, levels = sites)
 resistance_trajectories <- list(
-  data  = bind_rows(data_rows)  %>% mutate(marker = fac_m(marker), site = fac_s(site)),
-  model = bind_rows(model_rows) %>% mutate(marker = fac_m(marker), site = fac_s(site))
+  data  = bind_rows(data_rows)  |> mutate(marker = fac_m(marker), site = fac_s(site)),
+  model = bind_rows(model_rows) |> mutate(marker = fac_m(marker), site = fac_s(site))
 )
 saveRDS(resistance_trajectories, file.path(stage_dir, "resistance_trajectories.rds"))
 cat(sprintf("resistance_trajectories: %d markers x %d sites | %d obs rows | %d model rows\n",
             nrow(markers), length(sites),
             nrow(resistance_trajectories$data), nrow(resistance_trajectories$model)))
+
+# ---- SANITY: this is the 4.B.1 figure ---------------------------------------
+peek("resistance_trajectories")
+print(as.data.frame(
+  resistance_trajectories$data |>
+    group_by(marker, site) |>
+    summarise(first_pct = round(first(p_est), 1), last_pct = round(last(p_est), 1),
+              n_obs = n(), .groups = "drop")))
+
+print(
+  ggplot(resistance_trajectories$data) +
+    geom_ribbon(aes(x = t, ymin = Q2.5, ymax = Q97.5, fill = marker),
+                data = resistance_trajectories$model, alpha = 0.3) +
+    geom_ribbon(aes(x = t, ymin = Q25, ymax = Q75, fill = marker),
+                data = resistance_trajectories$model, alpha = 0.4) +
+    geom_pointrange(aes(x = t, y = p_est, ymin = CI_lower, ymax = CI_upper), size = 0.25) +
+    geom_hline(yintercept = 10, linetype = "dashed") +
+    facet_grid(marker ~ site) +
+    scale_fill_brewer(palette = "Set1", guide = "none") +
+    scale_y_continuous(limits = c(0, 100)) +
+    labs(x = "Time", y = "Marker prevalence (%)",
+         title = "Drug-resistance markers at the sentinel sites",
+         subtitle = "kelch13 spreading, dhps slowly declining")
+)

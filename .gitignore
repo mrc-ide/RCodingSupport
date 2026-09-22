@@ -6,3 +6,6 @@
 .Rapp.history
 *.Rproj
 /ignore
+
+# generated intermediates from the data-raw pipeline
+data-raw/staged_data/

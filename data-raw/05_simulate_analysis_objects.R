@@ -4,16 +4,14 @@
 # students to handle the complex objects statistical work hands back.
 #
 #   analysis_bundle    a list(data, summary_stats, fit) from a village survey of
-#                      bednet coverage vs malaria incidence (list-navigation + model
-#                      object lesson; replaces the old smoking_analysis_list).
+#                      bednet coverage vs malaria incidence (list-navigation +
+#                      model object lesson).
 #   posterior_density  a list(R0, reporting_rate, density) 2D posterior surface from
 #                      fitting the transmission model (raster/contour + colour-scale
-#                      lesson; replaces the old posterior_density KDE grid).
+#                      lesson).
 # ------------------------------------------------------------------------------
 
-source("00_setting.R")
-suppressPackageStartupMessages(library(MASS))
-stage_dir <- Sys.getenv("STAGE_DIR", unset = file.path(getwd(), "staged_data"))
+source(here::here("data-raw", "00_setting.R"))
 dir.create(stage_dir, showWarnings = FALSE, recursive = TRUE)
 
 # ==============================================================================
@@ -43,6 +41,37 @@ saveRDS(analysis_bundle, file.path(stage_dir, "analysis_bundle.rds"))
 cat(sprintf("analysis_bundle: %d villages | slope = %.2f cases/1000 per %% ITN (R2=%.2f)\n",
             n_vill, coef(fit)[2], summary(fit)$r.squared))
 
+# ---- SANITY: what 2.A.3 asks students to look at -----------------------------
+peek("analysis_bundle")
+print(round(summary_stats, 1))
+print(summary(fit)$coefficients)
+
+survey_plot <- survey |>
+  mutate(outlier = seq_len(n_vill) %in% out_idx,
+         true_mu = true_mu, resid = residuals(fit))
+
+p_fit <- ggplot(survey_plot, aes(bednet_coverage, malaria_incidence)) +
+  geom_line(aes(y = true_mu), colour = "grey50", linetype = 2) +
+  geom_point(aes(colour = outlier), size = 1.5, show.legend = FALSE) +
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE, colour = "steelblue", linewidth = 0.7) +
+  scale_colour_manual(values = c(`FALSE` = "black", `TRUE` = "red")) +
+  labs(x = "Bednet coverage (%)", y = "Malaria incidence (per 1,000/yr)",
+       title = "Survey data and lm fit",
+       subtitle = "red = planted outliers; grey dashed = true (curved) mean")
+
+p_res <- ggplot(survey_plot, aes(bednet_coverage, resid)) +
+  geom_hline(yintercept = 0, linetype = 3) +
+  geom_point(size = 1.5) +
+  labs(x = "Bednet coverage (%)", y = "Residual",
+       title = "Residuals", subtitle = "spread widens with coverage (heteroskedastic by design)")
+
+p_qq <- ggplot(survey_plot, aes(sample = resid)) +
+  stat_qq(size = 1.2) + stat_qq_line() +
+  labs(x = "Theoretical quantiles", y = "Sample quantiles",
+       title = "Residual QQ", subtitle = "outliers in the upper tail")
+
+print(p_fit + (p_res / p_qq))
+
 # ==============================================================================
 # 2) posterior_density: 2D posterior over (R0, reporting_rate) from the model fit
 # ==============================================================================
@@ -58,3 +87,29 @@ posterior_density <- list(R0 = kde$x, reporting_rate = kde$y, density = kde$z)
 saveRDS(posterior_density, file.path(stage_dir, "posterior_density.rds"))
 cat(sprintf("posterior_density: %d x %d grid over R0[%.1f,%.1f] x reporting_rate[%.2f,%.2f]\n",
             length(kde$x), length(kde$y), min(kde$x), max(kde$x), min(kde$y), max(kde$y)))
+
+# ---- SANITY: the 4.A.2 surface -----------------------------------------------
+peek("posterior_density")
+cat(sprintf("draws: R0 mean %.2f (sd %.2f), reporting_rate mean %.3f (sd %.3f), cor %.2f\n",
+            mean(draws[, 1]), sd(draws[, 1]), mean(draws[, 2]), sd(draws[, 2]),
+            cor(draws[, 1], draws[, 2])))
+peak <- which(kde$z == max(kde$z), arr.ind = TRUE)
+cat(sprintf("density peak at R0 = %.2f, reporting_rate = %.3f\n", kde$x[peak[1]], kde$y[peak[2]]))
+
+p_draws <- data.frame(R0 = draws[, 1], reporting_rate = draws[, 2]) |>
+  ggplot(aes(R0, reporting_rate)) +
+  geom_point(size = 0.3, alpha = 0.15) +
+  coord_cartesian(xlim = c(1.5, 4), ylim = c(0.15, 0.55)) +
+  labs(title = "Raw posterior draws", subtitle = "two overlapping modes")
+
+grid_df <- expand.grid(R0 = kde$x, reporting_rate = kde$y)
+grid_df$density <- as.vector(kde$z)
+p_kde <- ggplot(grid_df, aes(R0, reporting_rate)) +
+  geom_raster(aes(fill = density)) +
+  geom_contour(aes(z = density), colour = "white", linewidth = 0.2, bins = 8) +
+  scale_fill_viridis_c(option = "inferno") +
+  scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0)) +
+  labs(title = "KDE surface", subtitle = "what students plot") +
+  theme(legend.position = "bottom", legend.key.height = unit(3, "mm"))
+
+print(p_draws + p_kde)
