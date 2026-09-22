@@ -1,7 +1,7 @@
 ## 2.B.1 – Combining District Case Reports — Solutions
 ## ---------------------------------------------------
 
-## remotes::install_github("mrc-ide/RCodingSupport@v1.0.0")
+## remotes::install_github("mrc-ide/RCodingSupport@teaching-2026")
 library(RCodingSupport)
 
 ## ---------------------------------------------------
@@ -57,7 +57,7 @@ df_combined$prev_total <- df_combined$total_cases / df_combined$total_tested
 ## Task 4: Subset by year and plot
 ## ---------------------------------------------------
 
-df_y <- subset(df_combined, year >= 2018)
+df_y <- subset(df_combined, year == 2024)
 
 # Plot combined prevalence over weeks in that year
 plot(df_y$prev_total, type = "l",

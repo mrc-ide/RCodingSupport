@@ -3,26 +3,26 @@
 ## 2.A.3 Working with Lists
 ## ------------------------------------------------------------
 
-# remotes::install_github("mrc-ide/RCodingSupport@v1.0.0")
+# remotes::install_github("mrc-ide/RCodingSupport@teaching-2026")
 library(RCodingSupport)
 
 ## Object supplied by the package:
-smoking_analysis_list
-names(smoking_analysis_list)   # should be: "data", "summary_stats", "fit"
+analysis_bundle
+names(analysis_bundle)   # should be: "data", "summary_stats", "fit"
 
 ## ------------------------------------------------------------
 ## Task 1: Explore the list
 ## ------------------------------------------------------------
-class(smoking_analysis_list)                   # "list"
-typeof(smoking_analysis_list)                  # "list"
-length(smoking_analysis_list)                  # 3
-names(smoking_analysis_list)                   # element names
-str(smoking_analysis_list, max.level = 1)      # top-level structure
+class(analysis_bundle)                   # "list"
+typeof(analysis_bundle)                  # "list"
+length(analysis_bundle)                  # 3
+names(analysis_bundle)                   # element names
+str(analysis_bundle, max.level = 1)      # top-level structure
 
 # Element formats (expect: data.frame, named numeric, lm)
-class(smoking_analysis_list$data)
-class(smoking_analysis_list$summary_stats)
-class(smoking_analysis_list$fit)
+class(analysis_bundle$data)
+class(analysis_bundle$summary_stats)
+class(analysis_bundle$fit)
 
 ## Why a list (notes for tutors):
 ## - Can hold mixed types (data.frame, numeric vector, model object) under one name.
@@ -32,14 +32,14 @@ class(smoking_analysis_list$fit)
 ## Task 2: Access list elements (two ways)
 ## ------------------------------------------------------------
 # By name:
-dat1 <- smoking_analysis_list$data
-sst1 <- smoking_analysis_list$summary_stats
-fit1 <- smoking_analysis_list$fit
+dat1 <- analysis_bundle$data
+sst1 <- analysis_bundle$summary_stats
+fit1 <- analysis_bundle$fit
 
 # By index (double brackets return the object itself):
-dat2 <- smoking_analysis_list[[1]]
-sst2 <- smoking_analysis_list[[2]]
-fit2 <- smoking_analysis_list[[3]]
+dat2 <- analysis_bundle[[1]]
+sst2 <- analysis_bundle[[2]]
+fit2 <- analysis_bundle[[3]]
 
 # Sanity check (same objects):
 identical(dat1, dat2)
@@ -47,8 +47,8 @@ identical(sst1, sst2)
 identical(fit1, fit2)
 
 # Demonstrate single vs double brackets:
-class(smoking_analysis_list["data"])   # sub-list
-class(smoking_analysis_list[["data"]]) # data.frame
+class(analysis_bundle["data"])   # sub-list
+class(analysis_bundle[["data"]]) # data.frame
 
 ## ------------------------------------------------------------
 ## Task 3: Explore the data
@@ -58,14 +58,14 @@ head(dat1)
 str(dat1)
 summary(dat1)
 
-# Base scatterplot
-plot(dat1$smoking_prev, dat1$lung_cancer_incidence,
+# Base scatterplot: 110 villages, ITN coverage vs malaria incidence
+plot(dat1$bednet_coverage, dat1$malaria_incidence,
      pch = 19,
-     xlab = "Smoking prevalence (%)",
-     ylab = "Lung cancer incidence (per 100k)",
+     xlab = "Bednet coverage (% of households)",
+     ylab = "Malaria incidence (per 1,000 per year)",
      main = "Observed data")
 
-# Tutor note: look for slight curvature, heteroskedasticity, outliers.
+# Tutor note: look for slight curvature, heteroskedasticity, and two outliers.
 
 ## ------------------------------------------------------------
 ## Task 4: Explore the fitted model
@@ -89,21 +89,20 @@ res <- residuals(fit1)
 fitted_vals <- fitted(fit1)
 
 # Quick residual look:
-plot(dat1$smoking_prev, res,
+plot(dat1$bednet_coverage, res,
      pch = 19,
-     xlab = "Smoking prevalence (%)",
+     xlab = "Bednet coverage (% of households)",
      ylab = "Residual",
-     main = "Residuals vs Smoking prevalence")
+     main = "Residuals vs bednet coverage")
 abline(h = 0, lty = 3)
 
 ## ------------------------------------------------------------
 ## Task 5: Add your own notes
 ## ------------------------------------------------------------
 # Add a short character-string summary as a new list element "notes"
-smoking_analysis_list$notes <-
-  "Synthetic dataset linking smoking prevalence to lung cancer incidence. List includes summaries on the data, and results of fitting a linear model relating smoking prevalence to cancer incidence."
+analysis_bundle$notes <-
+  "Synthetic village survey linking insecticide-treated bednet coverage to malaria incidence. List includes summaries of the data, and results of fitting a linear model relating bednet coverage to incidence."
 
 # Verify the list now has four elements
-names(smoking_analysis_list)
-length(smoking_analysis_list)  # should now be 4
-
+names(analysis_bundle)
+length(analysis_bundle)  # should now be 4

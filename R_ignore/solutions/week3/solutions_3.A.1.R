@@ -9,22 +9,23 @@
 ## --- 1) weekly_cases.rds -----------------------------------------------------
 cases <- readRDS("data_raw/weekly_cases.rds")
 class(cases)      # "data.frame"
-dim(cases)        # 104 rows, 3 columns (year, week, cases)
+dim(cases)        # 260 rows, 3 columns (year, week, cases)
 head(cases)
 
 ## Notes:
 # - Saved as a single R object in .rds format.
-# - Data frame of weekly case counts over two years.
+# - Data frame of weekly case counts over five years (2020-2024).
 # - Variables: year, week, cases.
 
 ## --- 2) weekly_tests.txt (tab-delimited) ------------------------------------
-tests <- read.table("data_raw/weekly_tests.txt", sep = "\t")
+tests <- read.table("data_raw/weekly_tests.txt", sep = "\t", header = TRUE)
 class(tests)      # "data.frame"
-dim(tests)        # 104 rows, 3 columns (year, week, tested)
+dim(tests)        # 260 rows, 3 columns (year, week, tested)
 head(tests)
 
 ## Notes:
-# - Tab-delimited text file.
+# - Tab-delimited text file with a header row (header = TRUE is essential;
+#   without it every column is read as character and the header becomes row 1).
 # - Similar structure to weekly_cases: year, week, tested.
 # - Same number of rows; should align week-by-week with cases.
 
@@ -57,4 +58,4 @@ class(metadata)               # "list"
 # - Contents include:
 #   * surveillance_regions: simple character vector
 #   * lab_turnaround: data frame of lab metrics
-#   * metadata: list with source and file version info
+#   * metadata: list with data source and a contact address

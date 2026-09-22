@@ -6,7 +6,7 @@
 # ------------------------------------------------------------
 
 ## 1) Load the teaching package -----------------------------------------------
-# remotes::install_github("mrc-ide/RCodingSupport@v1.0.0")
+# remotes::install_github("mrc-ide/RCodingSupport@teaching-2026")
 library(RCodingSupport)   # provides 'incidence_weekly' vector
 
 ## 2) Source the helper script ------------------------------------------------

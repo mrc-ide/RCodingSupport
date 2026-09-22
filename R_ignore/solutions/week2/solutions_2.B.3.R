@@ -1,7 +1,7 @@
 ## 2.B.3 – Creating a Vaccine Trial Dataset — Solutions
 ## ----------------------------------------------------
 
-## remotes::install_github("mrc-ide/RCodingSupport@v1.0.0")
+## remotes::install_github("mrc-ide/RCodingSupport@teaching-2026")
 library(RCodingSupport)
 
 ## ----------------------------------------------------

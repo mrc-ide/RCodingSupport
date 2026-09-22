@@ -3,7 +3,7 @@
 ## 2.A.2 Working with Data Frames
 ## ------------------------------------------------------------
 
-# remotes::install_github("mrc-ide/RCodingSupport@v1.0.0")
+# remotes::install_github("mrc-ide/RCodingSupport@teaching-2026")
 library(RCodingSupport)
 
 ## ------------------------------------------------------------
@@ -33,7 +33,7 @@ names(patient_records)
 
 # Example: rename specific columns you think could be clearer.
 # (Adjust as you prefer; keep a consistent style.)
-names(patient_records)   <- c("Patient_ID", "Age", "Sex", "Height_cm", "Weight_kg", "Ethnicity", "Smoker")
+names(patient_records)   <- c("Patient_ID", "Age", "Sex", "Height_cm", "Weight_kg", "Ethnicity", "Bednet")
 
 # Check
 names(patient_records)

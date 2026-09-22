@@ -3,7 +3,7 @@
 ## 2.A.1 Working with Vectors and Matrices
 ## ------------------------------------------------------------
 
-# remotes::install_github("mrc-ide/RCodingSupport@v1.0.0")
+# remotes::install_github("mrc-ide/RCodingSupport@teaching-2026")
 library(RCodingSupport)
 
 ## ------------------------------------------------------------
@@ -19,7 +19,7 @@ n_weeks
 obs_day <- seq(from = 1, by = 7, length.out = n_weeks)
 
 # Quick plot
-plot(obs_day, incidence_weekly, type = "o", ylim = c(0, 350),
+plot(obs_day, incidence_weekly, type = "o", ylim = c(0, 1000),
      xlab = "Observation day (weekly)", ylab = "Weekly cases",
      main = "Weekly incidence over 5 years")
 
@@ -61,7 +61,7 @@ all(totals_by_col == incidence_weekly)  # should be TRUE
 age_20_24 <- incidence_weekly_age["20-24", ]
 
 # Plot alongside the overall series
-plot(obs_day, incidence_weekly, type = "l", ylim = c(0, 350),
+plot(obs_day, incidence_weekly, type = "l", ylim = c(0, 1000),
      xlab = "Observation day (weekly)", ylab = "Cases",
      main = "All cases vs 20–24 age group")
 lines(obs_day, age_20_24, col = 2, lwd = 2)

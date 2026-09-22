@@ -11,7 +11,7 @@
 #   (none; this script produces exploratory plots only)
 #
 # Purpose:
-#   Explore two related datasets describing respiratory testing activity
+#   Explore two related datasets describing malaria testing activity
 #   and seasonal temperature patterns in two cities.
 #
 # ------------------------------------------------------------------

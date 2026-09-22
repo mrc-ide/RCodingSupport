@@ -10,13 +10,13 @@ dat |>
   ggplot() + theme_bw() +
   geom_point(aes(x = date, y = positivity, col = city))
 
-# filter to 2019
-dat_2019 <- dat |>
-  filter(year == 2019)
+# filter to 2024 (the final year)
+dat_2024 <- dat |>
+  filter(year == 2024)
 
-# filter to before 2019
+# filter to before 2024
 dat_previous <- dat |>
-  filter(year < 2019)
+  filter(year < 2024)
 
 # get 95% prediction interval
 dat_prediction <- dat_previous |>
@@ -26,10 +26,10 @@ dat_prediction <- dat_previous |>
   mutate(min = mean - 1.96*SD,
          max = mean + 1.96*SD)
 
-# plot prediction and overlay 2019 points
+# plot prediction and overlay 2024 points
 dat_prediction |>
   ggplot() + theme_bw() +
   geom_ribbon(aes(x = week, ymin = min, ymax = max, fill = city), alpha = 0.5) +
-  geom_point(aes(x = week, y = positivity, col = city), data = dat_2019) +
+  geom_point(aes(x = week, y = positivity, col = city), data = dat_2024) +
   facet_wrap(~city)
 

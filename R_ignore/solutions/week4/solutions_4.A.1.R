@@ -4,7 +4,7 @@
 # Date: 2025-10-14
 #
 # Inputs:
-#   - R_ignore/non_package_data/two_cities_cases.rds
+#   - data_raw/two_cities_cases.rds
 #
 # Outputs:
 #   - outputs/positivity_two_cities.png  (image)
@@ -21,7 +21,7 @@ library(ggplot2)
 library(dplyr)
 
 # ---- Task 1: Load & explore ----
-dat <- readRDS(here("R_ignore", "non_package_data", "two_cities_cases.rds"))
+dat <- readRDS(here("data_raw", "two_cities_cases.rds"))
 
 str(dat)
 head(dat)
@@ -45,7 +45,7 @@ p_final <- p +
   xlab("Date") +
   ylab("Prevalence") +
   ggtitle("Test positivity over time by city") +
-  ylim(0, 0.25) +
+  ylim(0, 0.6) +
   theme_bw()
 
 p_final

@@ -1,7 +1,7 @@
 ## 2.B.2 – Cleaning a Matrix of Allele Frequencies — Solutions
 ## ------------------------------------------------------------
 
-## remotes::install_github("mrc-ide/RCodingSupport@v1.0.0")
+## remotes::install_github("mrc-ide/RCodingSupport@teaching-2026")
 library(RCodingSupport)
 
 ## ------------------------------------------------------------
@@ -35,8 +35,8 @@ allele_freq_clean <- allele_freq_matrix
 allele_freq_clean[neg_idx] <- NA_real_
 
 # Verify replacement happened and non-artefacts unchanged at the sampled spots
-allele_freq_matrix[33:35, 1:3]
-allele_freq_clean[33:35, 1:3]
+allele_freq_matrix[5:7, 1:4]
+allele_freq_clean[5:7, 1:4]
 
 ## ------------------------------------------------------------
 ## Task 3: Summarise missingness
