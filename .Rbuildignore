@@ -7,3 +7,4 @@ LICENSE.md
 ^data-raw/
 staged_data
 ^\.DS_Store$
+^CLAUDE\.md$
