@@ -1,7 +1,7 @@
 Package: RCodingSupport
 Type: Package
 Title: Example Datasets and Exercises for R Coding Support
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(
     person(
       "Bob", "Verity",
